@@ -1,0 +1,153 @@
+{
+    "layer": "top", // Waybar at top layer
+    "position": "top", // Waybar position (top|bottom|left|right)
+    // Choose the order of the modules
+    "modules-left": [
+        "hyprland/workspaces",
+        "custom/media"
+    ],
+    "modules-center": [
+        "clock"
+    ],
+    "modules-right": [
+        "cpu",
+        "custom/gpu",
+        "temperature",
+        "pulseaudio",
+        "bluetooth",
+        "network",
+        "tray"
+    ],
+    // Modules configuration
+    "hyprland/workspaces": {
+        "format": "{id}",
+        "tooltip": true,
+        "tooltip-format": "{title}: {class}",
+        "all-outputs": false,
+        "show-special": false
+    },
+    "bluetooth": {
+        "interval": 30,
+        "format": "{icon}",
+        "format-icons": {
+            "enabled": "󰂯",
+            "disabled": ""
+        },
+        "on-click": "blueberry"
+    },
+    "clock": {
+        "interval": 1,
+        "format": "  {:%b %e |  %I:%M:%S %p %Z}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "today-format": "<b>{}</b>",
+        "on-click": "gnome-calendar"
+    },
+    "cpu": {
+        "interval": "1",
+        "format": "CPU   {max_frequency}GHz <span color=\"darkgray\">| {usage}%</span>",
+        "max-length": 20,
+        "min-length": 10,
+        "on-click": "kitty -e htop --sort-key PERCENT_CPU",
+        "tooltip": false
+    },
+    "temperature": {
+        "interval": "4",
+        "hwmon-path": "/sys/class/hwmon/hwmon3/temp1_input",
+        "critical-threshold": 74,
+        "format-critical": "  {temperatureC}°C",
+        "format": "{icon}  {temperatureC}°C",
+        "format-icons": [
+            "",
+            "",
+            ""
+        ],
+        "max-length": 7,
+        "min-length": 7
+    },
+    "network": {
+        "format-wifi": "  {essid}",
+        "format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
+        "format-linked": "{ifname} (No IP) ",
+        "format-disconnected": "",
+        "format-alt": "{ifname}: {ipaddr}/{cidr}",
+        "family": "ipv4",
+        "tooltip-format-wifi": "  {ifname} @ {essid}\nStrength: {signalStrength}%\nFreq: {frequency}MHz\n {bandwidthUpBits}  {bandwidthDownBits}",
+        "tooltip-format-ethernet": " {ifname}\n {bandwidthUpBits}  {bandwidthDownBits}"
+    },
+    "pulseaudio": {
+        "scroll-step": 3, // %, can be a float
+        "format": "{icon} {volume}% {format_source}",
+        "format-bluetooth": "{volume}% {icon}  {format_source}",
+        "format-bluetooth-muted": " {icon}  {format_source}",
+        "format-muted": " {format_source}",
+        "format-source": "",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "󰥰",
+            "headset": "󰋎",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": [
+                "",
+                "",
+                ""
+            ]
+        },
+        "on-click": "pavucontrol",
+        "on-click-right": "pactl set-source-mute @DEFAULT_SOURCE@ toggle"
+    },
+    "custom/gpu": {
+        "exec": "$HOME/.config/waybar/custom_modules/custom-gpu.sh",
+        "return-type": "json",
+        "format": "GPU  {}",
+        "interval": 2,
+        "tooltip": "{tooltip}",
+        "max-length": 15,
+        "min-length": 30,
+        "on-click": "powerupp"
+    },
+    "custom/cpugovernor": {
+        "format": "{icon}",
+        "interval": "30",
+        "return-type": "json",
+        "exec": "$HOME/.config/waybar/custom_modules/cpugovernor.sh",
+        "min-length": 2,
+        "max-length": 2,
+        "format-icons": {
+            "perf": "󱐋",
+            "sched": "󰌪"
+        }
+    },
+    "custom/media": {
+        "format": "{icon}\u0020 {text}",
+        "return-type": "json",
+        "max-length": 40,
+        "format-icons": {
+            "spotify": "",
+            "notplaying": "󰽼",
+            "default": "󰎇"
+        },
+        "exec": "$HOME/.config/waybar/custom_modules/plyr.sh",
+        "interval": 1
+    },
+    "custom/weather": {
+        "format": "{icon}\u2000 {text}",
+        "return-type": "json",
+        "max-length": 30,
+        "format-icons": {
+            "clear": "",
+            "partlycloudy": "?",
+            "overcast": "",
+            "fog": "",
+            "rain": "",
+            "freezingrain": "",
+            "snow": "",
+            "thunderstorm": "",
+            "unknown": "?"
+        },
+        "exec": "/home/siven/.config/waybar/custom_modules/weather.sh",
+        "interval": 3600
+    }
+}
