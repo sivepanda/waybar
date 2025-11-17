@@ -4,6 +4,7 @@
     // Choose the order of the modules
     "modules-left": [
         "hyprland/workspaces",
+        "custom/brightness",
         "custom/media"
     ],
     "modules-center": [
@@ -19,6 +20,11 @@
         "tray"
     ],
     // Modules configuration
+    "custom/brightness": {
+        "exec": "$HOME/.config/waybar/custom_modules/getbrightness.sh",
+        "interval": 1,
+        "format": "  {text}"
+    },
     "hyprland/workspaces": {
         "format": "{id}",
         "tooltip": true,
